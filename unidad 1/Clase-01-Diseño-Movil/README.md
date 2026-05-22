@@ -366,3 +366,151 @@ npx expo start --clear
 ## Licencia
 
 Material académico de uso exclusivo para la asignatura Programación Móvil — UPQ, Mayo–Agosto 2026.
+
+
+
+
+
+
+
+
+INVESTIGACIÓN_EP.01.03
+
+
+# React Native
+
+## ¿Qué es React Native?
+
+React Native es un framework desarrollado por Meta que permite crear aplicaciones móviles para Android e iOS usando JavaScript y React.
+
+Sitio oficial: https://reactnative.dev
+
+### Características
+- Desarrollo multiplataforma
+- Uso de JavaScript
+- Código reutilizable
+- Componentes nativos
+- Hot Reload
+
+---
+
+# Buenas Prácticas
+
+- Organizar correctamente el proyecto
+- Crear componentes reutilizables
+- Mantener estilos separados
+- Usar nombres descriptivos
+- Optimizar rendimiento
+- Separar lógica de la interfaz
+
+---
+
+# Estructura de Proyecto
+
+```plaintext
+MiProyecto/
+│
+├── android/
+├── ios/
+├── src/
+│   ├── components/
+│   ├── screens/
+│   ├── navigation/
+│   ├── services/
+│   ├── styles/
+│   └── assets/
+│
+├── App.js
+└── package.json
+```
+
+| Carpeta | Función |
+|---|---|
+| components | Componentes reutilizables |
+| screens | Pantallas |
+| navigation | Navegación |
+| services | APIs y lógica |
+| styles | Estilos |
+| assets | Imágenes y recursos |
+
+---
+
+# Tipos de Datos
+
+## String
+
+```jsx
+const nombre = "Marco";
+
+<Text>{nombre}</Text>
+```
+
+---
+
+## Number
+
+```jsx
+const edad = 21;
+
+<Text>{edad}</Text>
+```
+
+---
+
+## Boolean
+
+```jsx
+const activo = true;
+
+<Text>{activo ? "Activo" : "Inactivo"}</Text>
+```
+
+---
+
+## Array
+
+```jsx
+const frutas = ["Manzana", "Pera", "Uva"];
+
+<View>
+  {frutas.map((fruta, index) => (
+    <Text key={index}>{fruta}</Text>
+  ))}
+</View>
+```
+
+---
+
+## Object
+
+```jsx
+const usuario = {
+  nombre: "Marco",
+  edad: 21
+};
+
+<Text>{usuario.nombre}</Text>
+```
+
+---
+
+# Ejemplo Completo
+
+```jsx
+import React from 'react';
+import { View, Text } from 'react-native';
+
+export default function App() {
+
+  const nombre = "Marco";
+  const edad = 21;
+  const activo = true;
+
+  return (
+    <View>
+      <Text>Nombre: {nombre}</Text>
+      <Text>Edad: {edad}</Text>
+      <Text>Estado: {activo ? "Activo" : "Inactivo"}</Text>
+    </View>
+  );
+}
