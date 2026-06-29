@@ -1,23 +1,12 @@
-# Nuevo Proyecto App
+## Actividad: Navegación Anidada
 
-Aplicacion movil academica creada con Expo, React Native y TypeScript para la entrega del primer parcial de Programacion Movil.
+En esta actividad se implementó navegación anidada dentro del proyecto integrador utilizando Bottom Tabs y Stack Navigator. La aplicación ya contaba con navegación por pestañas, por lo que se agregó una pestaña llamada **Productos**, dentro de la cual se integró un Stack con dos pantallas: una pantalla de lista y una pantalla de detalle.
 
-## Objetivo
+El flujo implementado permite que el usuario entre a la pestaña Productos, visualice una lista de productos y seleccione uno mediante el botón **Ver detalle**. Al presionar dicho botón, la aplicación navega hacia la pantalla de detalle enviando como parámetro el `id` del producto seleccionado.
 
-Presentar una app funcional con menu inferior, pantallas informativas, CRUD SQLite y una actividad de navegacion anidada para productos.
+### Diagrama de navegación
 
-## Tecnologias utilizadas
-
-- Expo
-- React Native
-- TypeScript
-- React Navigation
-- npm
-- Git/GitHub
-
-## Diagrama de navegacion
-
-```text
+```txt
 App
 └── NavigationContainer
     └── BottomTabs
@@ -32,85 +21,24 @@ App
                 └── ProductoDetalle
 ```
 
-## Navegacion anidada
+### Flujo de navegación
 
-`App.tsx` mantiene el punto de entrada principal y monta `BottomTabs`. Dentro de `BottomTabs.tsx` existe un solo `NavigationContainer`; ahi se registran las pestanas principales de la aplicacion.
-
-La pestana `Productos` no abre una pantalla simple, sino un Stack propio definido en `src/navigation/ProductosStack.tsx`. Ese Stack contiene:
-
-- `ProductosLista`: muestra la lista de productos y navega al detalle enviando `id`.
-- `ProductoDetalle`: recibe `route.params.id`, busca el producto correspondiente y muestra su informacion.
-
-El flujo esperado es:
-
-```text
-Bottom Tabs -> Productos -> Lista de productos -> Detalle del producto -> Regresar
+```txt
+Pestañas → Productos → Lista de productos → Detalle del producto → Regreso
 ```
 
-## Versiones de React Navigation
+### Paso de parámetros
 
-El proyecto usa React Navigation 7 con `@react-navigation/native` y `@react-navigation/bottom-tabs`. Para la navegacion anidada se agrego `@react-navigation/native-stack`, que pertenece a la misma familia de paquetes y evita mezclar implementaciones incompatibles.
+Desde la pantalla de lista se navega hacia la pantalla de detalle enviando el identificador del producto seleccionado:
 
-El conflicto de versiones se evito revisando las dependencias reales del proyecto correcto antes de integrar el Stack. No se creo otra app ni otro `NavigationContainer`; la navegacion quedo conectada dentro de la estructura existente.
-
-## Estructura relevante
-
-```text
-nuevo-proyecto-app/
-├── App.tsx
-├── package.json
-├── README.md
-└── src/
-    ├── components/
-    ├── navigation/
-    │   ├── BottomTabs.tsx
-    │   └── ProductosStack.tsx
-    ├── screens/
-    │   ├── HomeScreen.tsx
-    │   ├── ProductoDetalleScreen.tsx
-    │   ├── ProductosListaScreen.tsx
-    │   ├── ProfileScreen.tsx
-    │   ├── ProjectScreen.tsx
-    │   ├── SkillsScreen.tsx
-    │   └── SQLiteProductosScreen.tsx
-    ├── styles/
-    └── types/
-        ├── navigation.ts
-        ├── productoDB.ts
-        └── productos.ts
+```ts
+navigation.navigate("ProductoDetalle", { id: producto.id });
 ```
 
-## Requisitos previos
+En la pantalla de detalle se recibe el parámetro mediante `route.params` y se utiliza para mostrar la información correspondiente al producto seleccionado.
 
-- Node.js instalado
-- npm instalado
-- Expo disponible mediante `npx expo`
-- Expo Go instalado en el telefono si se desea probar en dispositivo fisico
+### Reflexión sobre versiones
 
-## Instalar dependencias
+Durante la implementación se revisó que las dependencias de React Navigation fueran compatibles entre sí. Esto es importante porque si se mezclan versiones diferentes de `@react-navigation/native`, `@react-navigation/bottom-tabs` y el paquete de Stack, el proyecto puede presentar errores de compilación.
 
-```bash
-npm install
-```
-
-## Ejecutar el proyecto
-
-```bash
-npx expo start
-```
-
-Tambien se pueden usar estos comandos:
-
-```bash
-npm run android
-npm run ios
-npm run web
-```
-
-## Probar Productos
-
-1. Abre la app con `npx expo start`.
-2. En el menu inferior entra a `Productos`.
-3. En la lista presiona `Ver detalle`.
-4. Verifica que el detalle muestre `ID`, `Producto`, `Descripcion` y `Precio`.
-5. Usa el boton de regreso del encabezado para volver a la lista.
+Para evitar conflictos, se utilizó la misma familia de React Navigation que ya estaba instalada en el proyecto y se evitó duplicar el `NavigationContainer`. De esta manera, el Stack de Productos quedó anidado correctamente dentro de una pestaña del Bottom Tabs.
