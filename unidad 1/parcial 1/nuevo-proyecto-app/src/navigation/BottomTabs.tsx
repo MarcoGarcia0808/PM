@@ -1,19 +1,13 @@
-﻿import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
 
+import { ProductosStack } from './ProductosStack';
 import { HomeScreen } from '../screens/HomeScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { ProjectScreen } from '../screens/ProjectScreen';
 import { SQLiteProductosScreen } from '../screens/SQLiteProductosScreen';
 import { SkillsScreen } from '../screens/SkillsScreen';
-
-export type RootTabParamList = {
-  Inicio: undefined;
-  Perfil: undefined;
-  Habilidades: undefined;
-  'Mi Proyecto': undefined;
-  SQLite: undefined;
-};
+import type { RootTabParamList } from '../types/navigation';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
@@ -41,6 +35,7 @@ export function BottomTabs() {
         <Tab.Screen name="Habilidades" component={SkillsScreen} />
         <Tab.Screen name="Mi Proyecto" component={ProjectScreen} />
         <Tab.Screen name="SQLite" component={SQLiteProductosScreen} />
+        <Tab.Screen name="Productos" component={ProductosStack} />
       </Tab.Navigator>
     </NavigationContainer>
   );

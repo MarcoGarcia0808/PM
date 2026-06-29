@@ -4,7 +4,7 @@ Aplicacion movil academica creada con Expo, React Native y TypeScript para la en
 
 ## Objetivo
 
-Presentar una app funcional con tres pantallas conectadas por un menu inferior: perfil personal, habilidades y datos de un proyecto integrador.
+Presentar una app funcional con menu inferior, pantallas informativas, CRUD SQLite y una actividad de navegacion anidada para productos.
 
 ## Tecnologias utilizadas
 
@@ -15,33 +15,69 @@ Presentar una app funcional con tres pantallas conectadas por un menu inferior: 
 - npm
 - Git/GitHub
 
-## Estructura de carpetas
+## Diagrama de navegacion
+
+```text
+App
+└── NavigationContainer
+    └── BottomTabs
+        ├── Inicio
+        ├── Perfil
+        ├── Habilidades
+        ├── Mi Proyecto
+        ├── SQLite
+        └── Productos
+            └── ProductosStack
+                ├── ProductosLista
+                └── ProductoDetalle
+```
+
+## Navegacion anidada
+
+`App.tsx` mantiene el punto de entrada principal y monta `BottomTabs`. Dentro de `BottomTabs.tsx` existe un solo `NavigationContainer`; ahi se registran las pestanas principales de la aplicacion.
+
+La pestana `Productos` no abre una pantalla simple, sino un Stack propio definido en `src/navigation/ProductosStack.tsx`. Ese Stack contiene:
+
+- `ProductosLista`: muestra la lista de productos y navega al detalle enviando `id`.
+- `ProductoDetalle`: recibe `route.params.id`, busca el producto correspondiente y muestra su informacion.
+
+El flujo esperado es:
+
+```text
+Bottom Tabs -> Productos -> Lista de productos -> Detalle del producto -> Regresar
+```
+
+## Versiones de React Navigation
+
+El proyecto usa React Navigation 7 con `@react-navigation/native` y `@react-navigation/bottom-tabs`. Para la navegacion anidada se agrego `@react-navigation/native-stack`, que pertenece a la misma familia de paquetes y evita mezclar implementaciones incompatibles.
+
+El conflicto de versiones se evito revisando las dependencias reales del proyecto correcto antes de integrar el Stack. No se creo otra app ni otro `NavigationContainer`; la navegacion quedo conectada dentro de la estructura existente.
+
+## Estructura relevante
 
 ```text
 nuevo-proyecto-app/
-├── assets/
-├── src/
-│   ├── components/
-│   │   ├── DataRow.tsx
-│   │   ├── Header.tsx
-│   │   └── InfoCard.tsx
-│   ├── navigation/
-│   │   └── BottomTabs.tsx
-│   ├── screens/
-│   │   ├── ProfileScreen.tsx
-│   │   ├── SkillsScreen.tsx
-│   │   └── ProjectScreen.tsx
-│   ├── styles/
-│   │   └── globalStyles.ts
-│   └── types/
 ├── App.tsx
-├── index.ts
-├── app.json
 ├── package.json
-├── package-lock.json
-├── tsconfig.json
-├── .gitignore
-└── README.md
+├── README.md
+└── src/
+    ├── components/
+    ├── navigation/
+    │   ├── BottomTabs.tsx
+    │   └── ProductosStack.tsx
+    ├── screens/
+    │   ├── HomeScreen.tsx
+    │   ├── ProductoDetalleScreen.tsx
+    │   ├── ProductosListaScreen.tsx
+    │   ├── ProfileScreen.tsx
+    │   ├── ProjectScreen.tsx
+    │   ├── SkillsScreen.tsx
+    │   └── SQLiteProductosScreen.tsx
+    ├── styles/
+    └── types/
+        ├── navigation.ts
+        ├── productoDB.ts
+        └── productos.ts
 ```
 
 ## Requisitos previos
@@ -50,21 +86,6 @@ nuevo-proyecto-app/
 - npm instalado
 - Expo disponible mediante `npx expo`
 - Expo Go instalado en el telefono si se desea probar en dispositivo fisico
-
-## Pantallas
-
-- `ProfileScreen.tsx`: muestra una foto desde internet, una imagen local y datos personales.
-- `SkillsScreen.tsx`: muestra un arreglo `string[]` de habilidades usando `.map()`.
-- `ProjectScreen.tsx`: muestra los datos del proyecto integrador campo por campo y tambien con `JSON.stringify()`.
-
-## Tipos de datos utilizados
-
-- `string`: nombre, carrera, version y descripcion.
-- `number`: cuatrimestre y promedio.
-- `boolean`: titulado y activo.
-- `null`: dato pendiente.
-- `string[]`: lista de habilidades.
-- `object`: perfil y proyecto.
 
 ## Instalar dependencias
 
@@ -86,23 +107,10 @@ npm run ios
 npm run web
 ```
 
-## Estado actual
+## Probar Productos
 
-El proyecto cumple una base funcional para el primer parcial. Actualmente incluye:
-
-- Tres pantallas conectadas por menu inferior.
-- Imagen desde internet e imagen local.
-- Uso de `.map()` para mostrar habilidades.
-- Uso de `JSON.stringify()` para mostrar el objeto del proyecto.
-- Componentes reutilizables y estilos con `StyleSheet`.
-
-## Checklist de entrega
-
-- [x] 3 pantallas funcionando
-- [x] Menu inferior funcional
-- [x] Imagen desde internet
-- [x] Imagen local
-- [x] Uso de `.map()`
-- [x] Uso de `JSON.stringify()`
-- [x] Estilos con `StyleSheet`
-- [ ] Proyecto actualizado en repositorio
+1. Abre la app con `npx expo start`.
+2. En el menu inferior entra a `Productos`.
+3. En la lista presiona `Ver detalle`.
+4. Verifica que el detalle muestre `ID`, `Producto`, `Descripcion` y `Precio`.
+5. Usa el boton de regreso del encabezado para volver a la lista.
