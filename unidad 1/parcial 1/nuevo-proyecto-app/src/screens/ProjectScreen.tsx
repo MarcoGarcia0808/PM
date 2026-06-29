@@ -11,7 +11,7 @@ const proyecto = {
   version: '1.0.0',
   descripcion:
     'Aplicacion movil desarrollada con Expo, React Native y TypeScript para presentar informacion personal, habilidades y datos de un proyecto academico.',
-  repositorio: 'https://github.com/usuario/repositorio',
+  repositorio: 'https://github.com/MarcoGarcia0808/PM',
   activo: true,
 };
 
@@ -20,8 +20,8 @@ export function ProjectScreen() {
     <SafeAreaView style={globalStyles.safeArea}>
       <ScrollView contentContainerStyle={globalStyles.screen}>
         <Header
-          title="Mi Proyecto"
-          subtitle="Informacion del proyecto integrador usando un objeto de TypeScript."
+          title="Mi APP aqui en github"
+          subtitle="Informacion del proyecto integrador usando un objeto de TS."
         />
 
         <InfoCard>

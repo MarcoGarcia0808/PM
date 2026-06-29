@@ -19,7 +19,7 @@ export function SkillsScreen() {
       <ScrollView contentContainerStyle={globalStyles.screen}>
         <Header
           title="Habilidades"
-          subtitle="Tecnologias y herramientas que puedo utilizar para construir aplicaciones moviles."
+          subtitle="Tecnologias y herramientas utilizo para construir aplicaciones moviles."
         />
 
         <InfoCard>
